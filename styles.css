@@ -232,6 +232,48 @@ body {
     border: 2px solid var(--primary-color);
 }
 
+/* Badge de status offline no header */
+.offline-badge {
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    background: rgba(0, 0, 0, 0.25);
+    color: white;
+    padding: 0.3rem 0.6rem;
+    border-radius: 1rem;
+}
+
+/* Banner de nova versão disponível */
+.update-banner {
+    position: fixed;
+    left: 50%;
+    bottom: calc(var(--nav-height) + var(--spacing-md));
+    transform: translateX(-50%);
+    z-index: 3000;
+    background: var(--text-primary);
+    color: white;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: 0.75rem;
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+    max-width: calc(100% - 2rem);
+    text-align: center;
+}
+
+.update-banner-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.update-banner-actions .btn {
+    padding: var(--spacing-sm) var(--spacing-md);
+    min-height: auto;
+}
+
 /* Indicador de autosave (tela de criação/edição) */
 .autosave-row {
     min-height: 1.25rem;

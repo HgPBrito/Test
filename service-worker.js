@@ -2,9 +2,16 @@
 // Responsável pela instalação como PWA e pelo funcionamento offline.
 // Os dados do usuário (notas e imagens) ficam no IndexedDB, não neste
 // arquivo — este Service Worker cuida apenas dos arquivos estáticos
-// (HTML/CSS/JS/ícones), permitindo abrir o app sem conexão.
+// (HTML/CSS/JS/ícones), permitindo abrir e usar o app inteiro sem conexão.
+//
+// Estratégia: cache-first em tudo (o app carrega instantaneamente a partir
+// do que já está salvo no aparelho, funcionando 100% offline). A internet só
+// é usada em segundo plano para buscar uma versão mais nova dos arquivos —
+// e essa versão nova só entra em uso quando o usuário confirmar (ver
+// mensagem 'SKIP_WAITING' abaixo e js/pwa.js), nunca de forma automática no
+// meio de uma sessão em uso.
 
-const CACHE_VERSION = 'v2';
+const CACHE_VERSION = 'v3';
 const CACHE_NAME = `memorias-positivas-cache-${CACHE_VERSION}`;
 
 const PRECACHE_URLS = [
@@ -32,8 +39,10 @@ self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then((cache) => cache.addAll(PRECACHE_URLS))
-            .then(() => self.skipWaiting())
             .catch((err) => console.warn('SW: falha ao pré-cachear', err))
+        // Propositalmente NÃO chama self.skipWaiting() aqui: a nova versão
+        // fica "esperando" até o usuário confirmar a atualização pela UI,
+        // para nunca trocar o código em uso no meio de uma sessão ativa.
     );
 });
 
@@ -47,22 +56,22 @@ self.addEventListener('activate', (event) => {
     );
 });
 
+// Permite que a página peça para esta versão em espera assumir agora
+// (disparado quando o usuário clica em "Atualizar" no aviso de nova versão).
+self.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'SKIP_WAITING') {
+        self.skipWaiting();
+    }
+});
+
 self.addEventListener('fetch', (event) => {
     const { request } = event;
     if (request.method !== 'GET') return;
 
-    // Navegação de páginas: tenta rede primeiro, cai para cache e depois
-    // para offline.html se nada estiver disponível.
-    if (request.mode === 'navigate') {
-        event.respondWith(
-            fetch(request)
-                .catch(() => caches.match('./index.html'))
-                .then((response) => response || caches.match('./offline.html'))
-        );
-        return;
-    }
-
-    // Demais recursos (CSS/JS/ícones): cache primeiro, atualiza em segundo plano
+    // Cache-first para tudo, incluindo a navegação de páginas: responde
+    // instantaneamente com o que já está salvo (funciona 100% offline) e
+    // busca uma versão atualizada em segundo plano para a próxima visita,
+    // sem nunca bloquear o carregamento atual esperando a rede.
     event.respondWith(
         caches.match(request).then((cachedResponse) => {
             const networkFetch = fetch(request)
@@ -73,7 +82,12 @@ self.addEventListener('fetch', (event) => {
                     }
                     return networkResponse;
                 })
-                .catch(() => cachedResponse);
+                .catch(() => {
+                    if (request.mode === 'navigate') {
+                        return cachedResponse || caches.match('./offline.html');
+                    }
+                    return cachedResponse;
+                });
 
             return cachedResponse || networkFetch;
         })

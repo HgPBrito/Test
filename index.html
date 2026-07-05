@@ -26,6 +26,7 @@
         <header class="app-header">
             <h1>Memórias Positivas</h1>
             <div class="header-actions">
+                <span id="offlineBadge" class="offline-badge" hidden>Offline</span>
                 <button id="installAppBtn" class="header-icon-btn" aria-label="Instalar aplicativo" title="Instalar aplicativo" hidden>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -196,6 +197,15 @@
                 <span>Backup</span>
             </button>
         </nav>
+    </div>
+
+    <!-- Aviso de nova versão disponível -->
+    <div id="updateBanner" class="update-banner" hidden>
+        <span>Uma nova versão do app está disponível.</span>
+        <div class="update-banner-actions">
+            <button id="updateBannerApply" class="btn btn-primary">Atualizar agora</button>
+            <button id="updateBannerDismiss" class="btn btn-secondary">Depois</button>
+        </div>
     </div>
 
     <!-- Modal de Acesso Rápido aos Anos -->
