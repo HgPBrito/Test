@@ -11,7 +11,7 @@
 // mensagem 'SKIP_WAITING' abaixo e js/pwa.js), nunca de forma automática no
 // meio de uma sessão em uso.
 
-const CACHE_VERSION = 'v3';
+const CACHE_VERSION = 'v4';
 const CACHE_NAME = `memorias-positivas-cache-${CACHE_VERSION}`;
 
 const PRECACHE_URLS = [
