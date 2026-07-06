@@ -51,6 +51,11 @@ export function registerServiceWorker(onUpdateAvailable) {
 export function applyUpdate() {
     if (currentRegistration && currentRegistration.waiting) {
         currentRegistration.waiting.postMessage({ type: 'SKIP_WAITING' });
+    } else {
+        // Estado inesperado (sem worker em espera no momento do clique) —
+        // recarrega mesmo assim, para o botão nunca parecer "sem efeito".
+        console.warn('[pwa] Nenhum worker em espera ao aplicar atualização; recarregando.');
+        window.location.reload();
     }
 }
 
