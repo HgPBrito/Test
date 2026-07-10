@@ -163,6 +163,10 @@ body {
     border-color: var(--primary-color);
 }
 
+.year-quick-item--all {
+    grid-column: 1 / -1;
+}
+
 .year-quick-number {
     font-size: var(--font-size-lg);
     font-weight: 600;
@@ -459,6 +463,13 @@ body {
     transform: scale(1.2);
 }
 
+.carousel-counter {
+    text-align: center;
+    margin-top: var(--spacing-xs);
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+}
+
 /* Estado vazio */
 .empty-state {
     text-align: center;
@@ -720,6 +731,183 @@ body {
     color: var(--text-secondary);
 }
 
+/* Botão "Ver Todas as Memórias", sempre visível no topo — mesmo visual de
+   cartão usado no modal de acesso rápido do header */
+.filter-show-all-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.15rem;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto var(--spacing-xl);
+    background: var(--surface-alt);
+    border: 2px solid var(--border-color);
+    border-radius: 0.75rem;
+    padding: var(--spacing-lg);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-show-all-btn:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.filter-show-all-btn-label {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.filter-show-all-btn-sub {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+/* Breadcrumb de navegação (Todos os Anos > 2026 > Julho) */
+.filter-breadcrumb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    min-height: 1.5rem;
+}
+
+.filter-breadcrumb-item {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    cursor: pointer;
+    padding: var(--spacing-xs) 0;
+}
+
+.filter-breadcrumb-item:hover {
+    text-decoration: underline;
+}
+
+.filter-breadcrumb-item.current {
+    color: var(--text-primary);
+    font-weight: 600;
+    cursor: default;
+    pointer-events: none;
+}
+
+.filter-breadcrumb-sep {
+    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+}
+
+/* Grade de cartões (anos, meses ou semanas) — mesmo visual do modal de
+   acesso rápido do header, pra manter a interface consistente */
+.filter-browse-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: var(--spacing-md);
+    max-width: 600px;
+    margin: 0 auto;
+    padding-bottom: var(--spacing-md);
+}
+
+.filter-browse-item {
+    position: relative;
+    background: var(--surface-alt);
+    border: 2px solid var(--border-color);
+    border-radius: 0.75rem;
+    padding: var(--spacing-md);
+    padding-top: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--spacing-xs);
+    transition: all 0.2s ease;
+}
+
+.filter-browse-item:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.filter-browse-item.checked {
+    background: rgba(99, 102, 241, 0.1);
+    border-color: var(--primary-color);
+}
+
+.filter-browse-checkbox {
+    position: absolute;
+    top: var(--spacing-sm);
+    left: var(--spacing-sm);
+    width: 1.1rem;
+    height: 1.1rem;
+    accent-color: var(--primary-color);
+    cursor: pointer;
+}
+
+.filter-browse-chevron {
+    position: absolute;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    color: var(--text-muted);
+}
+
+.filter-browse-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: default;
+    color: inherit;
+    font-family: inherit;
+}
+
+.filter-browse-info.drillable {
+    cursor: pointer;
+}
+
+.filter-browse-label {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.filter-browse-count {
+    font-size: var(--font-size-xs);
+    color: var(--text-secondary);
+}
+
+/* Barra fixa embaixo com o botão de aplicar seleção */
+.filter-apply-bar {
+    position: sticky;
+    bottom: calc(-1 * var(--spacing-lg));
+    margin: var(--spacing-lg) calc(-1 * var(--spacing-lg)) calc(-1 * var(--spacing-lg));
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--surface-color);
+    border-top: 1px solid var(--border-color);
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.filter-apply-bar[hidden] {
+    display: none;
+}
+
+.filter-apply-bar .btn {
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+}
+
 .years-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
@@ -746,6 +934,11 @@ body {
     border-color: var(--primary-color);
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
+}
+
+.year-item.current {
+    background: rgba(99, 102, 241, 0.1);
+    border-color: var(--primary-color);
 }
 
 .year-number {

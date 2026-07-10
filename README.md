@@ -89,8 +89,12 @@ Na primeira execução, se o navegador suportar a File System Access API, o app 
 - Salvamento explícito via **"Salvar Agora"** (sem gravação automática enquanto digita)
 - Botões "Salvar Agora", "Excluir" e "Cancelar"
 
-### Tela de Anos Anteriores
-- Lista de anos com contagem de memórias, navegação direta para o ano selecionado
+### Tela de Filtro (aba "Filtrar")
+- Navegação em camadas: **Anos → Meses → Semanas** (domingo a sábado), com breadcrumb pra voltar a qualquer nível
+- Cada nível tem checkboxes pra seleção múltipla (ex: selecionar 2 anos, ou 3 meses de um mesmo ano) — tocar no nome do item explora mais fundo, marcar a caixinha seleciona
+- Barra fixa embaixo mostra quantas memórias estão selecionadas e aplica o filtro
+- Botão "Ver Todas as Memórias" sempre visível no topo
+- Botão de acesso rápido no header (badge do período atual) abre um atalho num modal: Todas / Este Mês / Esta Semana / lista de anos
 
 ### Backup
 - Sincronização automática via arquivo vinculado (desktop) ou botão de sincronização rápida (mobile/outros navegadores)
