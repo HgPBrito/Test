@@ -63,7 +63,7 @@ Isso deixa o banco muito mais leve e a navegação entre memórias mais rápida,
 
 ## Sincronização com arquivo de backup no dispositivo
 
-**Desktop (Chrome/Edge):** ao vincular um arquivo pela primeira vez (menu Backup → "Criar Novo Arquivo" ou "Vincular Arquivo Existente"), a referência fica salva no IndexedDB. A partir daí:
+**Desktop (Chrome/Edge):** ao vincular um arquivo pela primeira vez (aba Configurações → "Criar Novo Arquivo" ou "Vincular Arquivo Existente"), a referência fica salva no IndexedDB. A partir daí:
 - **Ao abrir o app**: verifica silenciosamente (sem nenhum clique) se há um arquivo vinculado com permissão concedida, lê o conteúdo e mescla com as notas locais (a versão mais recente de cada nota, por `updatedAt`, prevalece).
 - **A cada alteração salva** (criar/editar via "Salvar Agora", excluir, importação manual): agenda uma gravação automática no arquivo (debounce de 1,5s).
 - **Ao fechar a aba, minimizar ou trocar de app**: os eventos `visibilitychange`/`pagehide` forçam a gravação imediata de qualquer alteração pendente.
@@ -96,9 +96,11 @@ Na primeira execução, se o navegador suportar a File System Access API, o app 
 - Botão "Ver Todas as Memórias" sempre visível no topo
 - Botão de acesso rápido no header (badge do período atual) abre um atalho num modal: Todas / Este Mês / Esta Semana / lista de anos
 
-### Backup
-- Sincronização automática via arquivo vinculado (desktop) ou botão de sincronização rápida (mobile/outros navegadores)
+### Configurações (aba "Config")
+- **Aparência**: modo escuro com preferência salva no IndexedDB (e espelhada no localStorage só para evitar "flash" de tema errado ao carregar a página); respeita o tema do sistema operacional na primeira vez, antes de qualquer escolha manual
+- **Backup**: sincronização automática via arquivo vinculado (desktop) ou botão de sincronização rápida (mobile/outros navegadores)
 - Exportação/importação manual de JSON completo (notas + imagens), com merge por `updatedAt` em vez de substituição total
+- Estrutura pensada para crescer: novas seções de personalização (além de aparência) podem ser adicionadas nessa mesma tela no futuro
 
 ### PWA
 - Instalável em desktop e mobile (`manifest.json`, ícones 192x192/512x512 e variantes maskable)

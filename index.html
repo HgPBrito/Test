@@ -5,6 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Memórias Positivas do Ano</title>
 
+    <!-- Aplica o tema salvo antes da primeira renderização, evitando o
+         "flash" de tema claro seguido de escuro. A fonte oficial da
+         preferência é o IndexedDB (settings); este localStorage é só um
+         espelho rápido e síncrono, usado unicamente para esse fim. -->
+    <script>
+        (function () {
+            try {
+                if (localStorage.getItem('darkMode') === 'true') {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                }
+            } catch (e) { /* localStorage indisponível — segue no tema padrão */ }
+        })();
+    </script>
+
     <!-- PWA -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#6366f1">
@@ -174,6 +188,101 @@
                     <button type="button" id="filterApplyBtn" class="btn btn-primary"></button>
                 </div>
             </section>
+
+            <!-- Tela de Configurações -->
+            <section id="settings-screen" class="screen" aria-label="Configurações">
+                <div class="years-header">
+                    <h2>Configurações</h2>
+                    <p>Personalize o app e gerencie o backup das suas memórias</p>
+                </div>
+
+                <div class="settings-accordion">
+                    <div class="settings-accordion-item">
+                        <button type="button" class="settings-accordion-header" aria-expanded="false" aria-controls="accordionAparencia">
+                            <span class="settings-accordion-title">Aparência</span>
+                            <svg class="settings-accordion-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="settings-accordion-body-wrapper">
+                            <div class="settings-accordion-body" id="accordionAparencia">
+                                <div class="settings-accordion-body-inner">
+                                    <label class="settings-toggle-row" for="darkModeToggle">
+                                        <span class="settings-toggle-label">
+                                            <span class="settings-toggle-title">Modo Escuro</span>
+                                            <span class="settings-toggle-sub">Reduz o brilho da tela, ideal para uso à noite</span>
+                                        </span>
+                                        <span class="toggle-switch">
+                                            <input type="checkbox" id="darkModeToggle">
+                                            <span class="toggle-switch-slider"></span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-accordion-item">
+                        <button type="button" class="settings-accordion-header" aria-expanded="false" aria-controls="accordionSync">
+                            <span class="settings-accordion-title">Sincronização Automática</span>
+                            <svg class="settings-accordion-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="settings-accordion-body-wrapper">
+                            <div class="settings-accordion-body" id="accordionSync">
+                                <div class="settings-accordion-body-inner">
+                                    <p id="backupStatus" class="backup-status backup-status--checking">Verificando suporte do navegador...</p>
+
+                                    <div class="backup-sync-buttons">
+                                        <button id="linkNewFileBtn" class="btn btn-secondary">Criar Novo Arquivo de Backup</button>
+                                        <button id="linkExistingFileBtn" class="btn btn-secondary">Vincular Arquivo Existente</button>
+                                    </div>
+
+                                    <p class="backup-hint">
+                                        Depois de vinculado (apenas em Chrome/Edge desktop), suas memórias serão salvas automaticamente
+                                        nesse arquivo. Em outros navegadores (a maioria dos celulares), use o botão 🔄 no topo do app:
+                                        ele pede o arquivo de backup salvo no aparelho, mescla com as memórias daqui e baixa uma versão
+                                        atualizada automaticamente — guarde essa versão numa pasta do Google Drive/iCloud para ela
+                                        "viajar" entre seus aparelhos.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-accordion-item">
+                        <button type="button" class="settings-accordion-header" aria-expanded="false" aria-controls="accordionManual">
+                            <span class="settings-accordion-title">Backup Manual</span>
+                            <svg class="settings-accordion-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="settings-accordion-body-wrapper">
+                            <div class="settings-accordion-body" id="accordionManual">
+                                <div class="settings-accordion-body-inner">
+                                    <p class="settings-section-hint">Você também pode gerenciar o backup manualmente exportando ou importando um arquivo JSON.</p>
+
+                                    <div class="backup-actions">
+                                        <div class="backup-action">
+                                            <h4>Exportar Memórias</h4>
+                                            <p>Baixe todas as suas memórias (com imagens) em um arquivo JSON</p>
+                                            <button id="exportBtn" class="btn btn-primary">Exportar JSON</button>
+                                        </div>
+
+                                        <div class="backup-action">
+                                            <h4>Importar Memórias</h4>
+                                            <p>Carregue memórias de um arquivo JSON (será mesclado com as memórias atuais)</p>
+                                            <input type="file" id="importInput" accept=".json" style="display: none;">
+                                            <button id="importBtn" class="btn btn-secondary">Selecionar Arquivo JSON</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </main>
 
         <!-- Menu Inferior de Navegação -->
@@ -204,15 +313,12 @@
                 <span>Filtrar</span>
             </button>
             
-            <button class="nav-item" id="backupBtn" aria-label="Backup das memórias">
+            <button class="nav-item" data-screen="settings-screen" aria-label="Configurações">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                    <polyline points="14,2 14,8 20,8"></polyline>
-                    <line x1="16" y1="13" x2="8" y2="13"></line>
-                    <line x1="16" y1="17" x2="8" y2="17"></line>
-                    <polyline points="10,9 9,9 8,9"></polyline>
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
                 </svg>
-                <span>Backup</span>
+                <span>Config</span>
             </button>
         </nav>
     </div>
@@ -256,55 +362,6 @@
         </div>
     </div>
 
-    <!-- Modal de Backup -->
-    <div id="backupModal" class="modal" role="dialog" aria-labelledby="backupModalTitle" aria-hidden="true">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="backupModalTitle">Backup das Memórias</h2>
-                <button class="modal-close" id="backupModalClose" aria-label="Fechar modal">&times;</button>
-            </div>
-            
-            <div class="modal-body">
-                <!-- Sincronização automática via arquivo vinculado no dispositivo -->
-                <div class="backup-sync-section">
-                    <h3>Sincronização Automática</h3>
-                    <p id="backupStatus" class="backup-status backup-status--checking">Verificando suporte do navegador...</p>
-
-                    <div class="backup-sync-buttons">
-                        <button id="linkNewFileBtn" class="btn btn-secondary">Criar Novo Arquivo de Backup</button>
-                        <button id="linkExistingFileBtn" class="btn btn-secondary">Vincular Arquivo Existente</button>
-                    </div>
-
-                    <p class="backup-hint">
-                        Depois de vinculado (apenas em Chrome/Edge desktop), suas memórias serão salvas automaticamente
-                        nesse arquivo. Em outros navegadores (a maioria dos celulares), use o botão 🔄 no topo do app:
-                        ele pede o arquivo de backup salvo no aparelho, mescla com as memórias daqui e baixa uma versão
-                        atualizada automaticamente — guarde essa versão numa pasta do Google Drive/iCloud para ela
-                        "viajar" entre seus aparelhos.
-                    </p>
-                </div>
-
-                <hr class="backup-divider">
-
-                <p>Você também pode gerenciar o backup manualmente exportando ou importando um arquivo JSON.</p>
-                
-                <div class="backup-actions">
-                    <div class="backup-action">
-                        <h3>Exportar Memórias</h3>
-                        <p>Baixe todas as suas memórias (com imagens) em um arquivo JSON</p>
-                        <button id="exportBtn" class="btn btn-primary">Exportar JSON</button>
-                    </div>
-                    
-                    <div class="backup-action">
-                        <h3>Importar Memórias</h3>
-                        <p>Carregue memórias de um arquivo JSON (será mesclado com as memórias atuais)</p>
-                        <input type="file" id="importInput" accept=".json" style="display: none;">
-                        <button id="importBtn" class="btn btn-secondary">Selecionar Arquivo JSON</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Loading Overlay -->
     <div id="loadingOverlay" class="loading-overlay" aria-hidden="true">
