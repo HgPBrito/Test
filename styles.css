@@ -8,28 +8,30 @@
 :root {
     color-scheme: light;
 
-    /* Cores principais */
-    --primary-color: #6366f1;
-    --primary-light: #818cf8;
-    --primary-dark: #4f46e5;
-    --secondary-color: #f59e0b;
-    --success-color: #10b981;
-    --danger-color: #ef4444;
-    --warning-color: #f59e0b;
+    /* Cores principais — tema "Terracota" (padrão), em tons pastéis
+       suaves. Pode ser trocado por outro preset via o atributo
+       [data-color-theme] no <html> (ver blocos de presets mais abaixo). */
+    --primary-color: #BE8760;
+    --primary-light: #D7B8A2;
+    --primary-dark: #945E38;
+    --secondary-color: #CACA72;
+    --success-color: #6E9F56;
+    --danger-color: #BC645C;
+    --warning-color: #C7A560;
     
-    /* Cores neutras */
-    --bg-color: #f8fafc;
-    --surface-color: #ffffff;
-    --surface-alt: #f1f5f9;
-    --border-color: #e2e8f0;
-    --text-primary: #1e293b;
-    --text-secondary: #64748b;
-    --text-muted: #94a3b8;
+    /* Cores neutras — tingidas sutilmente com a cor do tema ativo */
+    --bg-color: #F6F2EE;
+    --surface-color: #FDFCFC;
+    --surface-alt: #EEE7E2;
+    --border-color: #DCCFC6;
+    --text-primary: #493527;
+    --text-secondary: #7E6858;
+    --text-muted: #AA9C92;
     
     /* Shadows */
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-sm: 0 1px 2px 0 rgb(61 43 31 / 0.06);
+    --shadow-md: 0 4px 6px -1px rgb(61 43 31 / 0.1), 0 2px 4px -2px rgb(61 43 31 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(61 43 31 / 0.1), 0 4px 6px -4px rgb(61 43 31 / 0.1);
     
     /* Espacamentos */
     --spacing-xs: 0.25rem;
@@ -54,23 +56,258 @@
     --content-height: calc(100vh - var(--header-height) - var(--nav-height));
 }
 
-/* Modo escuro — mesmas variáveis, valores diferentes. Ativado via
-   [data-theme="dark"] no <html>, controlado em js/app.js. */
+/* Modo escuro — valores-base (tema Terracota), usados se nenhum preset
+   específico estiver ativo. Ativado via [data-theme="dark"] no <html>,
+   controlado em js/app.js. */
 [data-theme="dark"] {
     color-scheme: dark;
 
-    --bg-color: #0f172a;
-    --surface-color: #1e293b;
-    --surface-alt: #273449;
-    --border-color: #334155;
-    --text-primary: #f1f5f9;
-    --text-secondary: #94a3b8;
-    --text-muted: #64748b;
+    --primary-color: #D5AD90;
+    --primary-light: #E1C8B7;
+    --primary-dark: #C78B60;
+    --secondary-color: #DADA95;
+    --success-color: #94BD7F;
+    --danger-color: #DA8881;
+    --warning-color: #DABC81;
+
+    --bg-color: #1C1612;
+    --surface-color: #28201B;
+    --surface-alt: #362D26;
+    --border-color: #4D4138;
+    --text-primary: #F1EAE4;
+    --text-secondary: #BAABA1;
+    --text-muted: #87786E;
 
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
     --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
     --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
 }
+
+/* ===== Presets de tema de cor (escolhidos em Configurações) =====
+   Cada preset tinge tanto as cores de destaque quanto os neutros de
+   fundo/superfície/texto com a própria cor, de forma bem sutil (baixa
+   saturação) — em claro E em escuro — pra cada tema ficar visualmente
+   completo e coerente, não só o botão primário mudando de cor. */
+
+/* Terracota (padrão) — repete os valores acima, pra o atributo
+   sempre funcionar de forma previsível mesmo quando o padrão é selecionado
+   ativamente pelo usuário. */
+[data-color-theme="terracota"] {
+    --primary-color: #BE8760;
+    --primary-light: #D7B8A2;
+    --primary-dark: #945E38;
+    --secondary-color: #CACA72;
+    --success-color: #6E9F56;
+    --danger-color: #BC645C;
+    --warning-color: #C7A560;
+
+    --bg-color: #F6F2EE;
+    --surface-color: #FDFCFC;
+    --surface-alt: #EEE7E2;
+    --border-color: #DCCFC6;
+    --text-primary: #493527;
+    --text-secondary: #7E6858;
+    --text-muted: #AA9C92;
+}
+[data-theme="dark"][data-color-theme="terracota"] {
+    --primary-color: #D5AD90;
+    --primary-light: #E1C8B7;
+    --primary-dark: #C78B60;
+    --secondary-color: #DADA95;
+    --success-color: #94BD7F;
+    --danger-color: #DA8881;
+    --warning-color: #DABC81;
+
+    --bg-color: #1C1612;
+    --surface-color: #28201B;
+    --surface-alt: #362D26;
+    --border-color: #4D4138;
+    --text-primary: #F1EAE4;
+    --text-secondary: #BAABA1;
+    --text-muted: #87786E;
+}
+
+/* Índigo — a paleta original do app, agora em tom pastel */
+[data-color-theme="indigo"] {
+    --primary-color: #6061BE;
+    --primary-light: #A2A3D7;
+    --primary-dark: #383A94;
+    --secondary-color: #A472CA;
+    --success-color: #6E9F56;
+    --danger-color: #BC645C;
+    --warning-color: #C7A560;
+
+    --bg-color: #EEEFF6;
+    --surface-color: #FCFCFD;
+    --surface-alt: #E2E2EE;
+    --border-color: #C6C6DC;
+    --text-primary: #272849;
+    --text-secondary: #58587E;
+    --text-muted: #9293AA;
+}
+[data-theme="dark"][data-color-theme="indigo"] {
+    --primary-color: #9091D5;
+    --primary-light: #B7B7E1;
+    --primary-dark: #6062C7;
+    --secondary-color: #BC95DA;
+    --success-color: #94BD7F;
+    --danger-color: #DA8881;
+    --warning-color: #DABC81;
+
+    --bg-color: #12121C;
+    --surface-color: #1B1B28;
+    --surface-alt: #262636;
+    --border-color: #38384D;
+    --text-primary: #E4E5F1;
+    --text-secondary: #A1A2BA;
+    --text-muted: #6E6F87;
+}
+
+/* Sálvia — verde suave e terroso */
+[data-color-theme="salvia"] {
+    --primary-color: #7FBE60;
+    --primary-light: #B4D7A2;
+    --primary-dark: #579438;
+    --secondary-color: #72CA88;
+    --success-color: #6E9F56;
+    --danger-color: #BC645C;
+    --warning-color: #C7A560;
+
+    --bg-color: #F1F6EE;
+    --surface-color: #FCFDFC;
+    --surface-alt: #E6EEE2;
+    --border-color: #CDDCC6;
+    --text-primary: #324927;
+    --text-secondary: #657E58;
+    --text-muted: #9AAA92;
+}
+[data-theme="dark"][data-color-theme="salvia"] {
+    --primary-color: #A7D590;
+    --primary-light: #C5E1B7;
+    --primary-dark: #83C760;
+    --secondary-color: #95DAA6;
+    --success-color: #94BD7F;
+    --danger-color: #DA8881;
+    --warning-color: #DABC81;
+
+    --bg-color: #151C12;
+    --surface-color: #1F281B;
+    --surface-alt: #2B3626;
+    --border-color: #3F4D38;
+    --text-primary: #E9F1E4;
+    --text-secondary: #A9BAA1;
+    --text-muted: #76876E;
+}
+
+/* Coral — rosa-coral suave */
+[data-color-theme="coral"] {
+    --primary-color: #BE6F60;
+    --primary-light: #D7ABA2;
+    --primary-dark: #944738;
+    --secondary-color: #CAB472;
+    --success-color: #6E9F56;
+    --danger-color: #BC645C;
+    --warning-color: #C7A560;
+
+    --bg-color: #F6F0EE;
+    --surface-color: #FDFCFC;
+    --surface-alt: #EEE4E2;
+    --border-color: #DCCAC6;
+    --text-primary: #492D27;
+    --text-secondary: #7E5E58;
+    --text-muted: #AA9692;
+}
+[data-theme="dark"][data-color-theme="coral"] {
+    --primary-color: #D59C90;
+    --primary-light: #E1BEB7;
+    --primary-dark: #C77260;
+    --secondary-color: #DAC995;
+    --success-color: #94BD7F;
+    --danger-color: #DA8881;
+    --warning-color: #DABC81;
+
+    --bg-color: #1C1412;
+    --surface-color: #281D1B;
+    --surface-alt: #362826;
+    --border-color: #4D3B38;
+    --text-primary: #F1E7E4;
+    --text-secondary: #BAA5A1;
+    --text-muted: #87726E;
+}
+
+/* Oceano — azul calmo */
+[data-color-theme="oceano"] {
+    --primary-color: #60A2BE;
+    --primary-light: #A2C7D7;
+    --primary-dark: #387894;
+    --secondary-color: #727DCA;
+    --success-color: #6E9F56;
+    --danger-color: #BC645C;
+    --warning-color: #C7A560;
+
+    --bg-color: #EEF4F6;
+    --surface-color: #FCFDFD;
+    --surface-alt: #E2EBEE;
+    --border-color: #C6D6DC;
+    --text-primary: #273F49;
+    --text-secondary: #58737E;
+    --text-muted: #92A3AA;
+}
+[data-theme="dark"][data-color-theme="oceano"] {
+    --primary-color: #90C0D5;
+    --primary-light: #B7D5E1;
+    --primary-dark: #60A8C7;
+    --secondary-color: #959DDA;
+    --success-color: #94BD7F;
+    --danger-color: #DA8881;
+    --warning-color: #DABC81;
+
+    --bg-color: #12191C;
+    --surface-color: #1B2428;
+    --surface-alt: #263136;
+    --border-color: #38474D;
+    --text-primary: #E4EDF1;
+    --text-secondary: #A1B2BA;
+    --text-muted: #6E7F87;
+}
+
+/* Ameixa — roxo suave */
+[data-color-theme="ameixa"] {
+    --primary-color: #B660BE;
+    --primary-light: #D3A2D7;
+    --primary-dark: #8C3894;
+    --secondary-color: #CA729E;
+    --success-color: #6E9F56;
+    --danger-color: #BC645C;
+    --warning-color: #C7A560;
+
+    --bg-color: #F5EEF6;
+    --surface-color: #FDFCFD;
+    --surface-alt: #EDE2EE;
+    --border-color: #DAC6DC;
+    --text-primary: #462749;
+    --text-secondary: #7B587E;
+    --text-muted: #A892AA;
+}
+[data-theme="dark"][data-color-theme="ameixa"] {
+    --primary-color: #CF90D5;
+    --primary-light: #DEB7E1;
+    --primary-dark: #BF60C7;
+    --secondary-color: #DA95B8;
+    --success-color: #94BD7F;
+    --danger-color: #DA8881;
+    --warning-color: #DABC81;
+
+    --bg-color: #1B121C;
+    --surface-color: #271B28;
+    --surface-alt: #352636;
+    --border-color: #4B384D;
+    --text-primary: #F0E4F1;
+    --text-secondary: #B8A1BA;
+    --text-muted: #856E87;
+}
+
+
 
 /* Tipografia base */
 body {
@@ -180,7 +417,7 @@ body {
 }
 
 .year-quick-item.current {
-    background: rgba(99, 102, 241, 0.1);
+    background: color-mix(in srgb, var(--primary-color) 10%, transparent);
     border-color: var(--primary-color);
 }
 
@@ -537,7 +774,7 @@ body {
 .date-input:focus, .location-input:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary-color) 10%, transparent);
 }
 
 .editor-container {
@@ -564,7 +801,7 @@ body {
 .rich-editor:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary-color) 10%, transparent);
 }
 
 .rich-editor p {
@@ -725,7 +962,7 @@ body {
 }
 
 .btn-danger:hover:not(:disabled) {
-    background: #dc2626;
+    background: color-mix(in srgb, var(--danger-color) 85%, black);
     transform: translateY(-1px);
     box-shadow: var(--shadow-md);
 }
@@ -858,7 +1095,7 @@ body {
 }
 
 .filter-browse-item.checked {
-    background: rgba(99, 102, 241, 0.1);
+    background: color-mix(in srgb, var(--primary-color) 10%, transparent);
     border-color: var(--primary-color);
 }
 
@@ -958,7 +1195,7 @@ body {
 }
 
 .year-item.current {
-    background: rgba(99, 102, 241, 0.1);
+    background: color-mix(in srgb, var(--primary-color) 10%, transparent);
     border-color: var(--primary-color);
 }
 
@@ -1009,7 +1246,7 @@ body {
 
 .nav-item.active {
     color: var(--primary-color);
-    background: rgba(99, 102, 241, 0.1);
+    background: color-mix(in srgb, var(--primary-color) 10%, transparent);
 }
 
 .nav-item span {
@@ -1123,7 +1360,7 @@ body {
 }
 
 .settings-accordion-item.open .settings-accordion-header {
-    background-color: rgba(99, 102, 241, 0.12);
+    background-color: color-mix(in srgb, var(--primary-color) 12%, transparent);
     color: var(--primary-color);
     box-shadow: inset 0 0 0 2px var(--primary-color);
 }
@@ -1198,6 +1435,58 @@ body {
     padding: var(--spacing-md) var(--spacing-lg);
     text-align: left;
     cursor: pointer;
+}
+
+/* Seletor de cor do tema */
+.color-theme-label {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: var(--spacing-lg) 0 var(--spacing-sm);
+}
+
+.color-theme-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(4.5rem, 1fr));
+    gap: var(--spacing-sm);
+}
+
+.color-theme-swatch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+    background: var(--surface-color);
+    border: 2px solid var(--border-color);
+    border-radius: 0.75rem;
+    padding: var(--spacing-sm);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.color-theme-swatch:hover {
+    border-color: var(--swatch-primary, var(--primary-color));
+    transform: translateY(-2px);
+}
+
+.color-theme-swatch.active {
+    border-color: var(--swatch-primary, var(--primary-color));
+    background: color-mix(in srgb, var(--swatch-primary, var(--primary-color)) 10%, transparent);
+    box-shadow: 0 0 0 2px var(--swatch-primary, var(--primary-color));
+}
+
+.color-theme-swatch-dot {
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    background: var(--swatch-primary, var(--primary-color));
+    border: 2px solid var(--surface-color);
+    box-shadow: 0 0 0 1px var(--border-color);
+}
+
+.color-theme-swatch-name {
+    font-size: var(--font-size-xs);
+    color: var(--text-secondary);
+    text-align: center;
 }
 
 .settings-toggle-label {
@@ -1296,19 +1585,19 @@ body {
 }
 
 .backup-status--linked {
-    background: rgba(16, 185, 129, 0.12);
-    color: #047857;
+    background: color-mix(in srgb, var(--success-color) 15%, transparent);
+    color: var(--success-color);
 }
 
 .backup-status--pending {
-    background: rgba(245, 158, 11, 0.12);
-    color: #b45309;
+    background: color-mix(in srgb, var(--warning-color) 15%, transparent);
+    color: var(--warning-color);
 }
 
 .backup-status--error,
 .backup-status--unsupported {
-    background: rgba(239, 68, 68, 0.1);
-    color: #b91c1c;
+    background: color-mix(in srgb, var(--danger-color) 12%, transparent);
+    color: var(--danger-color);
 }
 
 .backup-status--not-linked,
